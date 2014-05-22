@@ -1,8 +1,0 @@
-FTP server host : www.ssmotivation.co.za
-FTP IP Address : 197.242.144.8 (may also be used as FTP server) 
-UserID : ssmotebh
-Password : 6p5kE2gY
-
-DB: ssmotebh_db
-user: ssmotebh_root
-password: Iistheone1
