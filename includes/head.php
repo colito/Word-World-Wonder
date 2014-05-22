@@ -37,7 +37,7 @@
     echo '
         <div id="topper">
             <div id="title">
-                <a href="../wordworld"><h2>Palavra Maravilha do Mundo</h2></a>
+                <a href="../word_world_wonder"><h2>Palavra Maravilha do Mundo</h2></a>
             </div>
     ';
 
@@ -51,7 +51,7 @@
             </div>
 
             <div id="links">
-                <a href="../wordworld">Home</a>&nbsp;
+                <a href="../word_world_wonder">Home</a>&nbsp;
                 <a href="add_piece.php">Add</a>&nbsp;
                 <a href="profile.php">Profile</a>&nbsp;
             </div>

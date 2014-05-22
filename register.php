@@ -15,7 +15,7 @@ require_once('includes/head.php');
                 if($_GET['registration_success'] == 'success')
                 {
                     echo "<p class='success'>Your registration was successful. </p>";
-                    echo "<p class='success'>Click <a href='../wordworld'>here</a> to access the home page</p>";
+                    echo "<p class='success'>Click <a href='../word_world_wonder'>here</a> to access the home page</p>";
                     return;
                 }
                 else
