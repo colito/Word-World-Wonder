@@ -33,7 +33,7 @@ class PlaceholderManager extends Operator
         return $placeholders_found;
     }
 
-    public function placeholder_lists($template, $content, $page_name, $depth)
+    public function placeholder_lists($template, $content, $page_name, $header_files, $depth)
     {
         $config = new Config();
 
@@ -43,9 +43,11 @@ class PlaceholderManager extends Operator
 
         $all_placeholders = array(
             'templata:app-name' => $config->app_name,
+            'app-name' => $config->app_name,
             'template:res' => $depth.'templates/'.$config->active_template,
             'template:css' => $this->unpack_css_files(),
             'page-title' => $page_name,
+            'header-files' => $this->unpack_header_resources($header_files),
             'templata:right-click' => $this->right_click_switch($config->right_click),
             'body-content' => $content,
             'base-url' => '<base href="'.get_base_url().'"/>',
@@ -78,9 +80,9 @@ class PlaceholderManager extends Operator
         return $placeholder_box;
     }
 
-    public function replace_placeholders($template, $content, $page_name, $depth)
+    public function replace_placeholders($template, $content, $page_name, $header_files, $depth)
     {
-        $placeholders = $this->placeholder_lists($template, $content, $page_name, $depth);
+        $placeholders = $this->placeholder_lists($template, $content, $page_name, $header_files, $depth);
 
         $general_placeholders = $placeholders['all'];
         $templata_placeholders = $placeholders['templata_res'];
