@@ -77,10 +77,12 @@
 
     function include_lib($file_name)
     {
+        if(!file_exists(T_FNS.$file_name.'.php')) {return false; }
         return require_once(T_FNS.$file_name.'.php');
     }
 
     function include_tool($file_name)
     {
+        if(!file_exists(T_TOOLS.$file_name.'/index.php')) {return false; }
         return require_once(T_TOOLS.$file_name.'/index.php');
     }
