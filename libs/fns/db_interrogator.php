@@ -33,37 +33,39 @@ class DbInterrogator
         }
         else
         {
-            $comma_separated = implode(', ' . $columns);
-            $sql = 'SELECT ' .$comma_separated. ' FROM '. $table;
+            $sql = 'SELECT ' .$columns. ' FROM '. $table;
         }
         $result = $this->run_sql($sql);
         return $result;
     }
 
     #Post
-    public function insert_data($user_id, $entry_text)
+    public function insert_data($table, $user_id, $entry_text)
     {
         $entry_text = mysql_real_escape_string($entry_text);
 
-        $sql = 	"INSERT INTO blog".
+        /*$sql  = 'INSERT INTO ()'. $table;
+        $sql .= 'VALUES () ';*/
+
+        $old_sql = 	"INSERT INTO blog".
             "(user_id, blog_text) ".
             "VALUES($user_id, '$entry_text')";
 
-        $this->run_sql($sql);
+        $this->run_sql($old_sql);
         return true;
     }
 
     #Update
-    public function update_data($columns = array())
+    public function update_data($table, $columns, $where)
     {
-        foreach($columns as $column)
-        {
+        $sql  = 'UPDATE '. $table .' SET';
 
+        foreach($columns as $column=>$new_value)
+        {
+            $sql .= $column .' = '. $new_value;
         }
 
-        $sql =  'UPDATE table_name';
-        $sql .= 'SET column1 = value1, column2 = value2';
-        $sql .= 'WHERE some_column = some_value';
+        $sql .= 'WHERE '. $where;
 
         $result = $this->run_sql($sql);
 
