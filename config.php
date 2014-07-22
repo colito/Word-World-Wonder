@@ -8,7 +8,9 @@ Class Config
     public $default_landing_path = 'word';
 
     #
-    public $user_name = '';
+    public $host = 'localhost';
+    public $database = 'word_world_wonder';
+    public $user_name = 'root';
     public $password = '';
 
     # Right click bahaviour
