@@ -1,8 +1,11 @@
 <?php
-	$hostadress = "localhost";
-	$username = "root";
-	$password = "";
-	$my_sql_db = "word_world_wonder";
+    require_once('config.php');
+    $config = new Config();
+
+	$hostadress = $config->host;
+	$username = $config->user_name;
+	$password = $config->password;
+	$my_sql_db = $config->database;
 	
 	$connect = mysql_connect($hostadress, $username, $password);
 	
