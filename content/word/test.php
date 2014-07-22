@@ -1,3 +1,5 @@
+[page:Test]
+
 <?php
     include_lib('db_interrogator');
 
