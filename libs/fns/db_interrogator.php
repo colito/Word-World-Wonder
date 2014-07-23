@@ -44,18 +44,17 @@ class DbInterrogator
     }
 
     #Post
-    public function insert_data($table, $user_id, $entry_text)
+    public function insert_data($table, $column_values)
     {
-        $entry_text = mysql_real_escape_string($entry_text);
+        $to_insert = $this->prepare_for_insert($column_values);
 
-        /*$sql  = 'INSERT INTO ()'. $table;
-        $sql .= 'VALUES () ';*/
+        $columns = $to_insert['columns'];
+        $values = $to_insert['values'];
 
-        $old_sql = 	"INSERT INTO blog".
-            "(user_id, blog_text) ".
-            "VALUES($user_id, '$entry_text')";
+        $sql  = 'INSERT INTO ('.$columns.')' ."\n";
+        $sql .= 'VALUES ('.$values.')';
 
-        $this->run_sql($old_sql);
+        $this->run_sql($sql);
         return true;
     }
 
@@ -92,6 +91,45 @@ class DbInterrogator
         $mysqli->close();
 
         return $data;
+    }
+
+    public function prepare_for_insert($column_values)
+    {
+        $columns = '';
+        $values = '';
+        $i = 0;
+        $total_coulmns_values = count($column_values);
+        $prepared = array();
+
+        var_dump($total_coulmns_values);
+
+        foreach($column_values as $column => $value)
+        {
+            var_dump($i);
+            # Checks to see if it's on the last column and value so as to avoid adding an
+            # unwanted trailing comma.
+            if($i == $total_coulmns_values)
+            {
+                $columns .= $column;
+
+                # Checks if value is a string and escapes it accordingly
+                if(is_string($value)) { $values .= mysqli_real_escape_string($this->db_connect(), $value); }
+                else { $values .= $value; }
+            }
+            else
+            {
+                $columns .= $column.', ';
+
+                if(is_string($value)) { $values .= mysqli_real_escape_string($this->db_connect(), $value).', '; }
+                else { $values .= $value.', '; }
+            }
+            $i++;
+        }
+
+        $prepared['columns'] = $columns;
+        $prepared['values'] = $values;
+
+        return $prepared;
     }
 
     public function db_tables($db)
