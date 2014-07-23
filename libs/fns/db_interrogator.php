@@ -25,17 +25,21 @@ class DbInterrogator
     /*-----------=============TYPICAL SQL TRANSACTIONS===============----------------*/
 
     #Get
-    public function get_data($table, $columns)
+    public function get_data($table, $columns = null, $where = '1=1')
     {
-        if(empty($columns))
+        if(!empty($columns))
         {
-            $sql = 'SELECT * FROM '. $table;
+            $sql = 'SELECT '. $columns ."\n". ' FROM '. $table ."\n";
         }
         else
         {
-            $sql = 'SELECT ' .$columns. ' FROM '. $table;
+            $sql = 'SELECT * '. "\n" .'FROM '. $table ."\n";
         }
+
+        $sql .= 'WHERE '. $where;
+
         $result = $this->run_sql($sql);
+
         return $result;
     }
 
