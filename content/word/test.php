@@ -18,7 +18,7 @@
         'user_password' => md5('john1234'),
         'date_of_birth' => '1993-06-27',
         'gender' => 1,
-        'is_active' => 1
+        'is_active' => 0
     );
 
     $insert = $dbi->insert_data('www_user_profile', $new_user);

@@ -51,7 +51,7 @@ class DbInterrogator
         $columns = $to_insert['columns'];
         $values = $to_insert['values'];
 
-        $sql  = 'INSERT INTO ('.$columns.')' ."\n";
+        $sql  = 'INSERT INTO '.$table. ' ('.$columns.')' ."\n";
         $sql .= 'VALUES ('.$values.')';
 
         $this->run_sql($sql);
@@ -85,6 +85,7 @@ class DbInterrogator
 
         if(!$result) { die('Could not execute query: ' . mysql_error() . "\n". $query); }
 
+        # Iterate through each row of the result and save each line into an array.
         $data = array();
         while($row = mysqli_fetch_array($result)) { $data[] = $row; }
 
@@ -97,30 +98,27 @@ class DbInterrogator
     {
         $columns = '';
         $values = '';
-        $i = 0;
+        $i = 1;
         $total_coulmns_values = count($column_values);
         $prepared = array();
 
-        var_dump($total_coulmns_values);
-
         foreach($column_values as $column => $value)
         {
-            var_dump($i);
             # Checks to see if it's on the last column and value so as to avoid adding an
             # unwanted trailing comma.
             if($i == $total_coulmns_values)
             {
-                $columns .= $column;
+                $columns .=  $column;
 
                 # Checks if value is a string and escapes it accordingly
                 if(is_string($value)) { $values .= mysqli_real_escape_string($this->db_connect(), $value); }
-                else { $values .= $value; }
+                else { $values .= '"'. $value .'"'; }
             }
             else
             {
                 $columns .= $column.', ';
 
-                if(is_string($value)) { $values .= mysqli_real_escape_string($this->db_connect(), $value).', '; }
+                if(is_string($value)) { $values .= '"'.mysqli_real_escape_string($this->db_connect(), $value).'", '; }
                 else { $values .= $value.', '; }
             }
             $i++;
