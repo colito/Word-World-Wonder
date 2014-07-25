@@ -5,6 +5,8 @@
 
     $dbi = new DbInterrogator();
 
+    $table = 'www_user_profile';
+
     $columns = $dbi->table_columns('www_user_profile');
     $tables = $dbi->db_tables('word_world_wonder');
 
@@ -21,9 +23,12 @@
         'is_active' => 0
     );
 
-    $insert = $dbi->insert_data('www_user_profile', $new_user);
+    //$insert = $dbi->insert_data('www_user_profile', $new_user);
 
-    var_dump($insert);
+    //var_dump($insert);
+
+    $record_exists = $dbi->record_exists($table, 'user_email = "john@gmail.com"');
+    var_dump($record_exists);
 
     /*var_dump($tables);
     var_dump($columns);

@@ -40,7 +40,8 @@ class DbInterrogator
 
         $result = $this->run_sql($sql);
 
-        return $result;
+        if($result) {return $result;}
+        else {return false; }
     }
 
     #Post
@@ -92,6 +93,15 @@ class DbInterrogator
         $mysqli->close();
 
         return $data;
+    }
+
+    # Checcks if a already record exists
+    public function record_exists($table, $where)
+    {
+        $result = $this->get_data($table, null, $where);
+
+        if($result) {return true;}
+        else {return false; }
     }
 
     public function prepare_for_insert($column_values)
