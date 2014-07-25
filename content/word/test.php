@@ -1,36 +1,31 @@
 [page:Test]
 
 <?php
-    include_lib('db_interrogator');
+    include_lib('www_user_profile');
 
-    $dbi = new DbInterrogator();
+    $user_profile = new www_user_profile();
 
-    $table = 'www_user_profile';
+    $get = $user_profile->get_data('www_user_profile', null, 'is_active = 1');
 
-    $columns = $dbi->table_columns('www_user_profile');
-    $tables = $dbi->db_tables('word_world_wonder');
+    $user_profile->user_name = 'Bro Sam';
+    $user_profile->user_actual_name = 'Samual';
+    $user_profile->user_surname = 'McGinnis';
+    $user_profile->user_email = 'sam@gmail.com';
+    $user_profile->user_password = 'sam1234';
+    $user_profile->date_of_birth = '1993-06-27';
+    $user_profile->gender = 1;
+    $user_profile->is_active = 0;
 
-    $get = $dbi->get_data('www_user_profile', null, 'is_active = 1');
+    var_dump($user_profile->user_name);
 
-    $new_user = array(
-        'user_name' => 'Bro J',
-        'user_actual_name' => 'John',
-        'user_surname' => 'McGinnis',
-        'user_email' => 'john@gmail.com',
-        'user_password' => md5('john1234'),
-        'date_of_birth' => '1993-06-27',
-        'gender' => 1,
-        'is_active' => 0
-    );
+    var_dump($user_profile->db_table);
 
-    //$insert = $dbi->insert_data('www_user_profile', $new_user);
+    $where = 'user_email = "' . $user_profile->user_email.'"';
 
-    //var_dump($insert);
+    var_dump($user_profile->record_exists($where));
 
-    $record_exists = $dbi->record_exists($table, 'user_email = "john@gmail.com"');
-    var_dump($record_exists);
+    var_dump($get);
 
-    /*var_dump($tables);
-    var_dump($columns);
-    var_dump($get);*/
+    var_dump($user_profile->save());
+
 ?>
