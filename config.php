@@ -7,11 +7,11 @@ Class Config
     # Initial content to be displayed
     public $default_landing_path = 'word';
 
-    #
+    # DB
     public $host = 'localhost';
-    public $database = 'word_world_wonder';
     public $user_name = 'root';
     public $password = '';
+    public $database = 'word_world_wonder';
 
     # Right click bahaviour
     public $right_click = 1; # disables right-click event on the site if set to 0. default = 1
