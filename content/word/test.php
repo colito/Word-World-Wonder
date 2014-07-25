@@ -16,16 +16,16 @@
     $user_profile->gender = 1;
     $user_profile->is_active = 0;
 
-    var_dump($user_profile->user_name);
+    $class_vars = get_class_vars(get_class($user_profile));
+    var_dump($class_vars);
 
+    /*var_dump($user_profile->user_name);
     var_dump($user_profile->db_table);
 
     $where = 'user_email = "' . $user_profile->user_email.'"';
 
     var_dump($user_profile->record_exists($where));
-
     var_dump($get);
-
-    var_dump($user_profile->save());
+    var_dump($user_profile->save());*/
 
 ?>

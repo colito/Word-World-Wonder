@@ -10,7 +10,7 @@ class www_user_profile extends DbInterrogator
     public $user_password;
     public $date_of_birth;
     public $gender;
-    public $sdate_created;
+    public $date_created;
     public $is_active;
 
     function __construct()
@@ -20,6 +20,8 @@ class www_user_profile extends DbInterrogator
 
     public function columns()
     {
+        $class_vars = get_class_vars(get_class($this));
+
         $new_user = array(
             'user_name' => $this->user_name,
             'user_actual_name' => $this->user_actual_name,
