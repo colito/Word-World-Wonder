@@ -1,6 +1,8 @@
 <?php
-class DbInterrogator
+abstract class DbInterrogator
 {
+    public $db_table;
+
     /*-----------=============CONNECT TO DATABASE===============----------------*/
     public function db_connect()
     {
@@ -14,9 +16,8 @@ class DbInterrogator
 
         $mysqi = new mysqli($hostadress, $username, $password, $my_sql_db);
 
-        if (mysqli_connect_errno()) {
+        if (mysqli_connect_errno())
             die('Could not connect to MySQL: ' . mysqli_connect_error());
-        }
 
         return $mysqi;
     }
@@ -28,13 +29,9 @@ class DbInterrogator
     public function get_data($table, $columns = null, $where = '1=1')
     {
         if(!empty($columns))
-        {
             $sql = 'SELECT '. $columns ."\n". ' FROM '. $table ."\n";
-        }
         else
-        {
             $sql = 'SELECT * '. "\n" .'FROM '. $table ."\n";
-        }
 
         $sql .= 'WHERE '. $where;
 
@@ -88,16 +85,28 @@ class DbInterrogator
 
         # Iterate through each row of the result and save each line into an array.
         $data = array();
-        while($row = mysqli_fetch_array($result)) { $data[] = $row; }
+        try
+        {
+            while($row = @mysqli_fetch_array($result)) { $data[] = $row; }
 
+            //while($row = $result->fetch_assoc()) { $data[] = $row; }
+            //$result->free(); # free result set
+        }
+        catch(Exception $e)
+        {
+            return 'Could not fetch rows: ' . $e;
+        }
+
+        #Close connection
         $mysqli->close();
 
         return $data;
     }
 
-    # Checcks if a already record exists
-    public function record_exists($table, $where)
+    # Checks if a record already exists
+    public function record_exists($where)
     {
+        $table = $this->db_table;
         $result = $this->get_data($table, null, $where);
 
         if($result) {return true;}
