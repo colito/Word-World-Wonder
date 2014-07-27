@@ -2,22 +2,23 @@
 
 <?php
     include_lib('www_user_profile');
+    include_lib('model_morph');
 
     $user_profile = new www_user_profile();
+    $model_morph = new model_morph('www_user_profile', 'user_email', @$model_morph->columns['user_email']);
 
-    $get = $user_profile->get_data('www_user_profile', null, 'is_active = 1');
 
-    $user_profile->user_name = 'Bro Sam';
-    $user_profile->user_actual_name = 'Samual';
-    $user_profile->user_surname = 'McGinnis';
-    $user_profile->user_email = 'sam@gmail.com';
-    $user_profile->user_password = 'sam1234';
-    $user_profile->date_of_birth = '1993-06-27';
-    $user_profile->gender = 1;
-    $user_profile->is_active = 0;
+    $model_morph->columns['user_name'] = 'Mr Anderson';
+    $model_morph->columns['user_actual_name'] = 'Neo';
+    $model_morph->columns['user_surname'] = 'Anderson';
+    $model_morph->columns['user_email'] = 'andy@gmail.com';
+    $model_morph->columns['user_password'] = md5('andy1234');
+    $model_morph->columns['date_of_birth'] = '1993-06-27';
+    $model_morph->columns['gender'] = 2;
 
-    $class_vars = get_class_vars(get_class($user_profile));
-    var_dump($class_vars);
+    var_dump($model_morph->columns_to_save());
+
+    $model_morph->save(1);
 
     /*var_dump($user_profile->user_name);
     var_dump($user_profile->db_table);
