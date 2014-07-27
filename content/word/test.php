@@ -5,7 +5,7 @@
     include_lib('model_morph');
 
     $user_profile = new www_user_profile();
-    $model_morph = new model_morph('www_user_profile', 'user_email', @$model_morph->columns['user_email']);
+    $model_morph = new model_morph('www_user_profile');
 
 
     $model_morph->columns['user_name'] = 'Mr Anderson';
@@ -18,7 +18,7 @@
 
     var_dump($model_morph->columns_to_save());
 
-    $model_morph->save(1);
+    $model_morph->save(1, 'user_email', @$model_morph->columns['user_email']);
 
     /*var_dump($user_profile->user_name);
     var_dump($user_profile->db_table);

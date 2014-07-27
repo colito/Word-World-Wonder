@@ -3,15 +3,11 @@ include_lib('db_interrogator');
 class model_morph extends DbInterrogator
 {
     public $columns = array();
-    public $check_column;
-    public $check_value;
 
-    function __construct($table, $check_column = null, $check_value = null)
+    function __construct($table)
     {
         $this->db_table = $table;
         $columns = $this->table_columns($this->db_table);
-        $this->check_column = $check_column;
-        $this->check_value = $check_value;
 
         foreach($columns as $col)
             $this->columns[$col] = null;
@@ -22,7 +18,6 @@ class model_morph extends DbInterrogator
         $columns = $this->columns;
 
         $columns_to_save = array();
-
         foreach($columns as $key => $column)
         {
             if(!empty($column))
@@ -30,18 +25,18 @@ class model_morph extends DbInterrogator
                 $columns_to_save[$key] = $column;
             }
         }
-
         return $columns_to_save;
     }
 
-    public function save($check = 0)
+    public function save($check = 0, $check_column = null, $check_value = null)
     {
         $table = $this->db_table;
         $columns = $this->columns_to_save();
 
         if($check == 1)
         {
-            $where = $this->check_column .' = "' . $this->check_value.'"';
+            $where = $check_column .' = "' . $check_value.'"';
+
             $exists = $this->record_exists($where);
             if($exists) { return false; }
         }
