@@ -6,6 +6,8 @@ class model_morph extends DbInterrogator
 
     function __construct($table)
     {
+        parent::__construct();
+
         $this->db_table = $table;
         $columns = $this->table_columns($this->db_table);
 
