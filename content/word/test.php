@@ -1,8 +1,8 @@
 [page:Test]
 
 <?php
-    include_lib('www_user_profile');
-    include_lib('model_morph');
+    include_lib(T_CONTROLLER.'www_user_profile');
+    include_lib(T_CONTROLLER.'model_morph');
 
     $user_profile = new www_user_profile();
     $model_morph = new model_morph('www_user_profile');
