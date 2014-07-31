@@ -1,18 +1,38 @@
 <?php
 abstract class DbInterrogator
 {
+    public $db;
     public $db_table;
 
-    /*-----------=============CONNECT TO DATABASE===============----------------*/
-    public function db_connect()
+    function __construct()
+    {
+        $init = $this->init();
+        $this->db = $init['db'];
+    }
+
+    public function init()
     {
         require_once('config.php');
         $config = new Config();
 
-        $hostadress = $config->host;
-        $username = $config->user_name;
-        $password = $config->password;
-        $my_sql_db = $config->database;
+        $creds = array();
+        $creds['hostadress'] = $config->host;
+        $creds['username'] = $config->user_name;
+        $creds['password'] = $config->password;
+        $creds['db'] = $config->database;
+
+        return $creds;
+    }
+
+    /*-----------=============CONNECT TO DATABASE===============----------------*/
+    public function db_connect()
+    {
+        $creds = $this->init();
+
+        $hostadress = $creds['hostadress'];
+        $username = $creds['username'];
+        $password = $creds['password'];
+        $my_sql_db = $creds['db'];
 
         $mysqi = new mysqli($hostadress, $username, $password, $my_sql_db);
 
@@ -149,9 +169,9 @@ abstract class DbInterrogator
         return $prepared;
     }
 
-    public function db_tables($db)
+    public function db_tables()
     {
-        $sql = 'SHOW TABLES FROM ' . $db;
+        $sql = 'SHOW TABLES FROM ' . $this->db;
         $result = $this->run_sql($sql);
         foreach($result as $table) {$tables[] = $table[0];}
         return $tables;
