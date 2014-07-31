@@ -14,11 +14,11 @@
     $model_morph->columns['user_email'] = 'andy@gmail.com';
     $model_morph->columns['user_password'] = md5('andy1234');
     $model_morph->columns['date_of_birth'] = '1993-06-27';
-    $model_morph->columns['gender'] = 2;
+    $model_morph->columns['gender'] = 1;
 
-    //var_dump($model_morph->columns_to_save());
+    var_dump($model_morph->columns_to_save());
 
-    //$model_morph->save(1, 'user_email', $model_morph->columns['user_email']);
+    $model_morph->save(1, 'user_email', $model_morph->columns['user_email']);
 
     /*var_dump($user_profile->user_name);
     var_dump($user_profile->db_table);
