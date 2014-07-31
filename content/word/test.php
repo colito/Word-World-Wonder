@@ -2,10 +2,10 @@
 
 <?php
     include_lib(T_CONTROLLER.'www_user_profile');
-    include_lib(T_CONTROLLER.'model_morph');
+    include_lib(T_CONTROLLER.'dbi_negotiator');
 
     $user_profile = new www_user_profile();
-    $model_morph = new model_morph('www_user_profile');
+    $model_morph = new DbINegotiator('www_user_profile');
 
 
     $model_morph->columns['user_name'] = 'Mr Anderson';
