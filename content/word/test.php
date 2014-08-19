@@ -1,12 +1,19 @@
 [page:Test]
 
 <?php
+
+class std_class
+{
+
+}
+
     include_lib(T_CONTROLLER.'www_user_profile');
-    include_lib(T_CONTROLLER.'dbi_negotiator');
+    include_lib(T_MODEL.'dbi_negotiator');
 
     $user_profile = new www_user_profile();
     $model_morph = new DbINegotiator('www_user_profile');
 
+    $table = 'www_user_profile';
 
     $model_morph->columns['user_name'] = 'Mr Anderson';
     $model_morph->columns['user_actual_name'] = 'Neo';
@@ -18,7 +25,25 @@
 
     var_dump($model_morph->columns_to_save());
 
-    $model_morph->save(1, 'user_email', $model_morph->columns['user_email']);
+    var_dump($model_morph->save(1, 'user_email', $model_morph->columns['user_email']));
+
+    $set = array('user_name'=>'rabubi2!!');
+    $where = array('user_email'=>$model_morph->columns['user_email']);
+
+    var_dump($model_morph->save(2, $set, $where));
+
+    var_dump($model_morph->delete_data($table, $where));
+
+
+    $object = new std_class();
+    foreach ($model_morph->columns as $key => $value)
+    {
+        $object->$key = $value;
+    }
+
+    var_dump($object);
+
+    var_dump($object->user_name);
 
     /*var_dump($user_profile->user_name);
     var_dump($user_profile->db_table);
