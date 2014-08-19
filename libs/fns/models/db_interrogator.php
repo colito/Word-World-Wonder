@@ -218,4 +218,3 @@ abstract class DbInterrogator
         return $fields;
     }
 }
-?>
